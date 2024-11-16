@@ -4,14 +4,14 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLa
 from PyQt6.QtGui import QFont
 from PyQt6.QtCore import Qt
 
-API_KEY = "S64WJ3F80O62TQNF"
-
 class SymbolFinderApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Alpha Vantage App")
         self.setGeometry(100, 100, 800, 600)
         self.setStyleSheet("background-color: #2e2e2e; color: #ffffff;")
+
+        self.api_key = None
 
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -23,14 +23,40 @@ class SymbolFinderApp(QMainWindow):
         self.tabs.setStyleSheet("QTabWidget::pane { border: 1px solid #444; } QTabBar::tab { background: #444; color: #fff; padding: 10px; } QTabBar::tab:selected { background: #666; }")
         self.layout.addWidget(self.tabs)
 
+        self.api_key_tab = QWidget()
         self.symbol_search_tab = QWidget()
         self.download_csv_tab = QWidget()
 
+        self.tabs.addTab(self.api_key_tab, "API Key")
         self.tabs.addTab(self.symbol_search_tab, "Symbol Search")
         self.tabs.addTab(self.download_csv_tab, "Download CSV")
 
+        self.init_api_key_tab()
         self.init_symbol_search_tab()
         self.init_download_csv_tab()
+
+    def init_api_key_tab(self):
+        layout = QVBoxLayout()
+
+        label = QLabel("Enter Alpha Vantage API Key:")
+        label.setFont(QFont("Arial", 14))
+        layout.addWidget(label)
+
+        self.api_key_input = QLineEdit()
+        self.api_key_input.setFont(QFont("Arial", 14))
+        layout.addWidget(self.api_key_input)
+
+        save_button = QPushButton("Save API Key")
+        save_button.setFont(QFont("Arial", 14))
+        save_button.setStyleSheet("background-color: #4CAF50; color: white;")
+        save_button.clicked.connect(self.save_api_key)
+        layout.addWidget(save_button)
+
+        self.api_key_tab.setLayout(layout)
+
+    def save_api_key(self):
+        self.api_key = self.api_key_input.text()
+        print(f"API Key saved: {self.api_key}")
 
     def init_symbol_search_tab(self):
         layout = QVBoxLayout()
@@ -159,9 +185,13 @@ class SymbolFinderApp(QMainWindow):
             self.symbol_input.setPlaceholderText("Enter Symbol")
 
     def search_symbol(self):
+        if not self.api_key:
+            print("API Key is not set.")
+            return
+
         query = self.input_field.text()
         if query:
-            url = f"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={query}&apikey={API_KEY}"
+            url = f"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={query}&apikey={self.api_key}"
             response = requests.get(url)
             if response.status_code == 200:
                 data = response.json()
@@ -185,13 +215,17 @@ class SymbolFinderApp(QMainWindow):
                 self.result_table.setColumnCount(0)
 
     def download_csv(self):
+        if not self.api_key:
+            print("API Key is not set.")
+            return
+
         symbol = self.symbol_input.text()
         function = self.function_combo.currentText()
         if symbol and function:
             params = {
                 "function": function,
                 "symbol": symbol,
-                "apikey": API_KEY,
+                "apikey": self.api_key,
                 "datatype": "csv"
             }
             if function == "TIME_SERIES_INTRADAY":
