@@ -1,0 +1,35 @@
+# Ignore Alpha Vantage API key
+av.key
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment files
+.env
+*.env
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# CSV data files
+*.csv
+
+# Ignore candlestick chart images
+candlestickchart/*.png
+
+# Ignore example stock data
+example_stocks/*.csv
