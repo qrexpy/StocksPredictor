@@ -1,0 +1,10 @@
+# Required Python libraries for Stocks Predictor
+pandas
+numpy
+matplotlib
+mplfinance
+scikit-learn
+opencv-python
+keras
+bokeh
+tensorflow
