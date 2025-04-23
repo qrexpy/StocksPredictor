@@ -12,18 +12,27 @@
    ```sh
    git clone https://github.com/unerrored/StocksPredictor
    ```
-   ![image](https://github.com/user-attachments/assets/bfc3ef20-5793-4847-9c29-f4397d1f0c03)
-   ![image](https://github.com/user-attachments/assets/295b71be-b9ff-4cc1-b728-948434bf43dc)
 
-
-3. Navigate to the project directory:
+2. Navigate to the project directory:
    ```sh
    cd StocksPredictor
    ```
-   ![image](https://github.com/user-attachments/assets/28a7da79-d6d9-4b68-b9f9-2a213b6f57a0)
 
-4. Install the required dependencies using pip:
-   ```py
+3. Install the required dependencies using pip:
+   ```sh
    pip install pandas numpy matplotlib mplfinance scikit-learn opencv-python keras bokeh tensorflow
    ```
-   ![image](https://github.com/user-attachments/assets/43beb20d-f5a2-4ae4-b12b-9075c886a655)
+
+## Troubleshooting:
+- **Issue:** Unable to install dependencies.  
+  **Solution:** Ensure you are using Python 3.12 and have pip updated to the latest version. Run `pip install --upgrade pip` if necessary.
+
+- **Issue:** API key not working.  
+  **Solution:** Verify your API key is correct and active. You can regenerate it from the [Alpha Vantage API Key](https://www.alphavantage.co/support/#api-key) page.
+
+## FAQs:
+- **Q:** Can I use a different Python version?  
+  **A:** No, the project is specifically designed for Python 3.12.
+
+- **Q:** Where can I find more information about the dependencies?  
+  **A:** Check the official documentation for each library or package.
